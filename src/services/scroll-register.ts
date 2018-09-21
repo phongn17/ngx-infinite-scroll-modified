@@ -39,36 +39,14 @@ export function attachScrollEvent(options: Models.IScrollRegisterConfig): Observ
   return obs;
 }
 
-export function toInfiniteScrollParams(
-  lastScrollPosition: number,
-  stats: Models.IPositionStats,
-  distance: Models.IScrollerDistance
-): Models.IScrollParams {
-  const { scrollDown, fire } = ScrollResolver.getScrollStats(
-    lastScrollPosition,
-    stats,
-    distance
-  );
-  return {
-    scrollDown,
-    fire,
-    stats
-  };
+export function toInfiniteScrollParams(lastScrollPosition: number, stats: Models.IPositionStats, distance: Models.IScrollerDistance): Models.IScrollParams {
+  const { scrollDown, fire } = ScrollResolver.getScrollStats(lastScrollPosition, stats, distance);
+  return { scrollDown, fire, stats };
 }
 
-export const InfiniteScrollActions = {
-  DOWN: "[NGX_ISE] DOWN",
-  UP: "[NGX_ISE] UP"
-};
+export const InfiniteScrollActions = { DOWN: "[NGX_ISE] DOWN", UP: "[NGX_ISE] UP" };
 
-export function toInfiniteScrollAction(
-  response: Models.IScrollParams
-): Models.IInfiniteScrollAction {
+export function toInfiniteScrollAction(response: Models.IScrollParams): Models.IInfiniteScrollAction {
   const { scrollDown, stats: { scrolled: currentScrollPosition } } = response;
-  return {
-    type: scrollDown ? InfiniteScrollActions.DOWN : InfiniteScrollActions.UP,
-    payload: {
-      currentScrollPosition
-    }
-  };
+  return { type: scrollDown ? InfiniteScrollActions.DOWN : InfiniteScrollActions.UP, payload: { currentScrollPosition } };
 }
